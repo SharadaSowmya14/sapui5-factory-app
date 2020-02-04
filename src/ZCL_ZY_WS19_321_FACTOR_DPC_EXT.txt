@@ -1,0 +1,289 @@
+class ZCL_ZY_WS19_321_FACTOR_DPC_EXT definition
+  public
+  inheriting from ZCL_ZY_WS19_321_FACTOR_DPC
+  create public .
+
+public section.
+protected section.
+    METHODS ticketset_create_entity REDEFINITION.
+    METHODS ticketset_get_entityset REDEFINITION.
+    METHODS ticketset_get_entity REDEFINITION.
+    METHODS ticketset_update_entity REDEFINITION.
+    METHODS ticketset_delete_entity REDEFINITION.
+    METHODS technicianset_create_entity REDEFINITION.
+    METHODS technicianset_get_entityset REDEFINITION.
+    METHODS technicianset_get_entity REDEFINITION.
+    METHODS technicianset_update_entity REDEFINITION.
+    METHODS technicianset_delete_entity REDEFINITION.
+    METHODS assignset_create_entity REDEFINITION.
+    METHODS assignset_get_entityset REDEFINITION.
+    METHODS assignset_get_entity REDEFINITION.
+    METHODS assignset_update_entity REDEFINITION.
+    METHODS assignset_delete_entity REDEFINITION.
+private section.
+ENDCLASS.
+
+
+
+CLASS ZCL_ZY_WS19_321_FACTOR_DPC_EXT IMPLEMENTATION.
+
+    METHOD ticketset_create_entity.
+
+    DATA: ls_request_input_data TYPE zcl_zy_ws19_321_factor_mpc=>ts_ticket,
+          ls_ticket             TYPE zyws19_321_tck.
+
+*read request
+    io_data_provider->read_entry_data(
+    IMPORTING es_data = ls_request_input_data ).
+
+*assign ticket data values to fields
+
+    ls_ticket-ticket_id = ls_request_input_data-ticket_id.
+    ls_ticket-ticket_name = ls_request_input_data-ticket_name.
+    ls_ticket-ticket_type = ls_request_input_data-ticket_type.
+    ls_ticket-ticket_desc = ls_request_input_data-ticket_desc.
+    ls_ticket-location = ls_request_input_data-location.
+    ls_ticket-machine = ls_request_input_data-machine.
+    ls_ticket-skill_set = ls_request_input_data-skill_set.
+    ls_ticket-working_hrs = ls_request_input_data-working_hrs.
+
+*insert data into table ZYWS19_321_TCK
+    INSERT zyws19_321_tck FROM ls_ticket.
+  ENDMETHOD.
+
+  METHOD ticketset_get_entityset.
+
+    DATA it_ticket TYPE TABLE OF zyws19_321_tck.
+    DATA wa_ticket TYPE zyws19_321_tck.
+
+    SELECT * FROM zyws19_321_tck INTO TABLE it_ticket.
+    DELETE ADJACENT DUPLICATES FROM it_ticket COMPARING ticket_id.
+
+    et_entityset = it_ticket.
+
+  ENDMETHOD.
+
+  METHOD technicianset_create_entity.
+
+        DATA: ls_request_input_data TYPE zcl_zy_ws19_321_factor_mpc=>ts_technician,
+              ls_technician TYPE zyws19_321_tech.
+
+        io_data_provider->read_entry_data(
+        IMPORTING es_data = ls_request_input_data ).
+
+        ls_technician-technician_id = ls_request_input_data-technician_id.
+        ls_technician-technician_name = ls_request_input_data-technician_name.
+        ls_technician-skill_set = ls_request_input_data-skill_set.
+        ls_technician-working_hrs = ls_request_input_data-working_hrs.
+        ls_technician-location = ls_request_input_data-location.
+        ls_technician-availability = ls_request_input_data-availability.
+        ls_technician-notes = ls_request_input_data-notes.
+        ls_technician-contact = ls_request_input_data-contact.
+
+
+        INSERT zyws19_321_tech FROM ls_technician.
+
+     ENDMETHOD.
+
+     METHOD technicianset_get_entityset.
+        DATA it_technician type table of zyws19_321_tech.
+        data wa_technician type zyws19_321_tech.
+
+        select * from zyws19_321_tech into table it_technician.
+        delete adjacent duplicates from it_technician comparing technician_id.
+
+        et_entityset = it_technician.
+     ENDMETHOD.
+
+     METHOD assignset_create_entity.
+
+    DATA: ls_request_input_data TYPE zcl_zy_ws19_321_factor_mpc=>ts_assign,
+          ls_assign             TYPE zyws19_321_asgn.
+
+    io_data_provider->read_entry_data(
+    IMPORTING es_data = ls_request_input_data ).
+
+    ls_assign-ticket_id = ls_request_input_data-ticket_id.
+    ls_assign-technician_id = ls_request_input_data-technician_id.
+    ls_assign-assignment_date = ls_request_input_data-assignment_date.
+    ls_assign-time_from = ls_request_input_data-time_from.
+    ls_assign-time_to = ls_request_input_data-time_to.
+
+    INSERT zyws19_321_asgn FROM ls_assign.
+  ENDMETHOD.
+
+  METHOD assignset_get_entityset.
+
+    DATA it_assign TYPE TABLE OF zyws19_321_asgn.
+    DATA wa_assign TYPE zyws19_321_asgn.
+
+    SELECT * FROM zyws19_321_asgn INTO TABLE it_assign.
+    DELETE ADJACENT DUPLICATES FROM it_assign COMPARING ticket_id.
+
+    et_entityset = it_assign.
+
+  ENDMETHOD.
+
+  METHOD assignset_update_entity.
+
+        DATA: ls_request_input_data TYPE zcl_zy_ws19_321_factor_mpc=>ts_assign,
+              ls_assign             TYPE zyws19_321_asgn.
+
+        io_data_provider->read_entry_data( IMPORTING es_data = ls_request_input_data ).
+        IF ls_request_input_data IS NOT INITIAL.
+
+            ls_assign-ticket_id = ls_request_input_data-ticket_id.
+            ls_assign-technician_id = ls_request_input_data-technician_id.
+            ls_assign-assignment_date = ls_request_input_data-assignment_date.
+            ls_assign-time_from = ls_request_input_data-time_from.
+            ls_assign-time_to = ls_request_input_data-time_to.
+
+            UPDATE zyws19_321_asgn FROM ls_assign.
+
+        ENDIF.
+
+    ENDMETHOD.
+
+   METHOD assignset_get_entity.
+        DATA: lv_ticketid TYPE zyws19_321_asgn-ticket_id.
+        IF it_key_tab IS NOT INITIAL.
+            TRY.
+                DATA(ls_key_ticketid) = it_key_tab[ name = 'TicketId' ].
+                lv_ticketid = ls_key_ticketid-value.
+                SELECT SINGLE *
+                FROM zyws19_321_asgn
+                INTO CORRESPONDING FIELDS OF er_entity
+                WHERE ticket_id = lv_ticketid.
+            CATCH cx_root.
+                RETURN.
+            ENDTRY.
+        ENDIF.
+    ENDMETHOD.
+
+    METHOD assignset_delete_entity.
+
+    DATA:lt_keys   TYPE /iwbep/t_mgw_tech_pairs,
+         ls_key    TYPE /iwbep/s_mgw_tech_pair,
+
+         lv_ticketid TYPE zyws19_321_asgn-ticket_id.
+
+    lt_keys = io_tech_request_context->get_keys( ).
+
+    READ TABLE lt_keys WITH KEY name = 'TICKET_ID' INTO ls_key.
+
+    lv_ticketid = ls_key-value.
+
+    DELETE FROM zyws19_321_asgn WHERE ticket_id = lv_ticketid.
+  ENDMETHOD.
+
+  METHOD ticketset_update_entity.
+
+        DATA: ls_request_input_data TYPE zcl_zy_ws19_321_factor_mpc=>ts_ticket,
+              ls_ticket             TYPE zyws19_321_tck.
+
+        io_data_provider->read_entry_data( IMPORTING es_data = ls_request_input_data ).
+        IF ls_request_input_data IS NOT INITIAL.
+
+            ls_ticket-ticket_id = ls_request_input_data-ticket_id.
+            ls_ticket-ticket_name = ls_request_input_data-ticket_name.
+            ls_ticket-ticket_type = ls_request_input_data-ticket_type.
+            ls_ticket-ticket_desc = ls_request_input_data-ticket_desc.
+            ls_ticket-working_hrs = ls_request_input_data-working_hrs.
+            ls_ticket-location = ls_request_input_data-location.
+            ls_ticket-machine = ls_request_input_data-machine.
+            ls_ticket-skill_set = ls_request_input_data-skill_set.
+
+            UPDATE zyws19_321_tck FROM ls_ticket.
+
+        ENDIF.
+
+    ENDMETHOD.
+
+   METHOD ticketset_get_entity.
+        DATA: lv_ticketid TYPE zyws19_321_tck-ticket_id.
+        IF it_key_tab IS NOT INITIAL.
+            TRY.
+                DATA(ls_key_ticketid) = it_key_tab[ name = 'TicketId' ].
+                lv_ticketid = ls_key_ticketid-value.
+                SELECT SINGLE *
+                FROM zyws19_321_tck
+                INTO CORRESPONDING FIELDS OF er_entity
+                WHERE ticket_id = lv_ticketid.
+            CATCH cx_root.
+                RETURN.
+            ENDTRY.
+        ENDIF.
+    ENDMETHOD.
+
+    METHOD ticketset_delete_entity.
+
+    DATA:lt_keys   TYPE /iwbep/t_mgw_tech_pairs,
+         ls_key    TYPE /iwbep/s_mgw_tech_pair,
+
+         lv_ticketid TYPE zyws19_321_tck-ticket_id.
+
+    lt_keys = io_tech_request_context->get_keys( ).
+
+    READ TABLE lt_keys WITH KEY name = 'TICKET_ID' INTO ls_key.
+
+    lv_ticketid = ls_key-value.
+
+    DELETE FROM zyws19_321_tck WHERE ticket_id = lv_ticketid.
+  ENDMETHOD.
+
+  METHOD technicianset_update_entity.
+
+        DATA: ls_request_input_data TYPE zcl_zy_ws19_321_factor_mpc=>ts_technician,
+              ls_technician             TYPE zyws19_321_tech.
+
+        io_data_provider->read_entry_data( IMPORTING es_data = ls_request_input_data ).
+        IF ls_request_input_data IS NOT INITIAL.
+
+            ls_technician-technician_id = ls_request_input_data-technician_id.
+            ls_technician-technician_name = ls_request_input_data-technician_name.
+            ls_technician-skill_set = ls_request_input_data-skill_set.
+            ls_technician-working_hrs = ls_request_input_data-working_hrs.
+            ls_technician-location = ls_request_input_data-location.
+            ls_technician-availability = ls_request_input_data-availability.
+            ls_technician-notes = ls_request_input_data-notes.
+            ls_technician-contact = ls_request_input_data-contact.
+
+            UPDATE zyws19_321_tech FROM ls_technician.
+
+        ENDIF.
+
+    ENDMETHOD.
+
+   METHOD technicianset_get_entity.
+        DATA: lv_technicianid TYPE zyws19_321_tech-technician_id.
+        IF it_key_tab IS NOT INITIAL.
+            TRY.
+                DATA(ls_key_technicianid) = it_key_tab[ name = 'TechnicianId' ].
+                lv_technicianid = ls_key_technicianid-value.
+                SELECT SINGLE *
+                FROM zyws19_321_tech
+                INTO CORRESPONDING FIELDS OF er_entity
+                WHERE technician_id = lv_technicianid.
+            CATCH cx_root.
+                RETURN.
+            ENDTRY.
+        ENDIF.
+    ENDMETHOD.
+
+    METHOD technicianset_delete_entity.
+
+    DATA:lt_keys   TYPE /iwbep/t_mgw_tech_pairs,
+         ls_key    TYPE /iwbep/s_mgw_tech_pair,
+
+         lv_technicianid TYPE zyws19_321_tech-technician_id.
+
+    lt_keys = io_tech_request_context->get_keys( ).
+
+    READ TABLE lt_keys WITH KEY name = 'TECHNICIAN_ID' INTO ls_key.
+
+    lv_technicianid = ls_key-value.
+
+    DELETE FROM zyws19_321_tech WHERE technician_id = lv_technicianid.
+  ENDMETHOD.
+
+ENDCLASS.
