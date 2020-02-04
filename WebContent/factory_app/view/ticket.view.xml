@@ -1,0 +1,73 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" controllerName="factory_app.controller.ticket"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="Tickets">
+		<content>
+			<Table id="ticketTable" items="{/TicketSet}" growing="true"
+				growingScrollToLoad="true">
+
+				<columns>
+					<Column>
+						<Text text="Ticket ID"></Text>
+					</Column>
+					<Column>
+						<Text text="Ticket Name"></Text>
+					</Column>
+					<Column>
+						<Text text="Ticket Type"></Text>
+					</Column>
+					<Column>
+						<Text text="Ticket description"></Text>
+					</Column>
+					<Column>
+						<Text text="Working Hours"></Text>
+					</Column>
+					<Column>
+						<Text text="Location"></Text>
+					</Column>
+					<Column>
+						<Text text="Machine"></Text>
+					</Column>
+					<Column>
+						<Text text="Skill Set"></Text>
+					</Column>
+					<Column>
+						<Text text="Edit Ticket"></Text>
+					</Column>
+					<Column>
+						<Text text="Cancel Ticket"></Text>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem>
+						<Text text="{TicketId}" />
+						<Text text="{TicketName}" />
+						<Text text="{TicketType}" />
+						<Text text="{TicketDesc}" />
+						<Text text="{WorkingHrs}" />
+						<Text text="{Location}" />
+						<Text text="{Machine}" />
+						<Text text="{SkillSet}" />
+						<Button text="Edit Ticket" press="editTicket"></Button>
+						<Button text="Cancel Ticket" press="cancelTicket"></Button>
+					</ColumnListItem>
+				</items>
+
+			</Table>
+		</content>
+		<footer>
+			<Bar>
+				<contentLeft>
+					<Button text="Add New Ticket" app:link="ticketcreation" icon="sap-icon://add"
+						type="Accept" press="navigate"></Button>					
+				</contentLeft>
+				<contentRight>
+					<Button text="View Dashboard" app:link="dashboard" press="navigate"></Button>
+					<Button text="View Technician" app:link="technician" press="navigate"></Button>
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</core:View>

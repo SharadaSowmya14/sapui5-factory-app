@@ -1,0 +1,45 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" xmlns:f="sap.ui.layout.form" 
+	controllerName="factory_app.controller.ticketcreation"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	id="ticketcreation" viewName="ticketcreation">
+	<Page title="Add New Ticket" showNavButton="true" navButtonPress="onBack">
+		<content>
+			<VBox class="sapUiSmallMargin">
+				
+				<Label text="Ticket ID"/>
+				<Input id="ticketid" width="20em" placeholder="e.x. C101"></Input>
+				
+				<Label text="Ticket Name"/>
+				<Input id="ticketnameid" width="20em" placeholder="e.x. Ticket101"></Input>
+				
+				<Label text="Ticket Type"/>
+				<Select id="tickettypeid" width="10em" 
+					autoAdjustWidth="true" selectedKey="0">
+					<core:Item key="TECHNICAL" text="TECHNICAL" />
+					<core:Item key="NON-TECHNICAL" text="NON-TECHNICAL" />
+				</Select>
+				
+				<Label text="Ticket Description"/>
+				<Input id="ticketdescriptionid" width="20em" placeholder="e.x. Repair Machine"></Input>
+				
+				<Label text="Working Hours"/>
+				<Input id="workinghoursid" width="20em" placeholder="e.x. 6"></Input>
+				
+				<Label text="Location"/>
+				<Input id="locationid" width="20em" placeholder="e.x. Netherlands"></Input>
+				
+				<Label text="Machine"/>
+				<Input id="machineid" width="20em" placeholder="e.x. Laptop"></Input>
+				
+				<Label text="Skill Sets"/>
+				<Input id="skillsetid" width="20em" placeholder="e.x. Machine Learning 101"></Input>
+							
+				<Button text="Add Ticket" icon="sap-icon://add" type="Accept" 
+					press="addTicket"></Button>
+				
+			</VBox>
+
+		</content>
+	</Page>
+</core:View>

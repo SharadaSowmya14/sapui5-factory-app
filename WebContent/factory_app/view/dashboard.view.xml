@@ -1,0 +1,64 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" controllerName="factory_app.controller.dashboard"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	id="dashboardviewid">
+	<Page title="Dashboard">
+		<content>
+
+			<Table id="dashboardTable" items="{/AssignSet}" growing="true"
+				growingScrollToLoad="true">
+
+				<columns>
+					<Column>
+						<Text text="Ticket ID"></Text>
+					</Column>
+					<Column>
+						<Text text="Technician ID"></Text>
+					</Column>
+					<Column>
+						<Text text="Start Time"></Text>
+					</Column>
+					<Column>
+						<Text text="End Time"></Text>
+					</Column>
+					<Column>
+						<Text text="Assignment Date"></Text>
+					</Column>
+					<Column>
+						<Text text="Edit Task"></Text>
+					</Column>
+					<Column>
+						<Text text="Cancel Task"></Text>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem> 
+						<Text text="{TicketId}"/>
+						<Text text="{TechnicianId}"/>
+						<Text text="{TimeFrom}"/>
+						<Text text="{TimeTo}"/>
+						<Text text="{AssignmentDate}"/>
+						<Button text="Edit Assignment" press="editAssignment"></Button>
+						<Button text="Cancel Assignment" press="cancelAssignment"></Button>
+					</ColumnListItem>
+				</items>
+			</Table>				
+			
+		</content>
+		<footer>
+			<Bar>
+				<contentLeft>
+					<Button text="Ticket Assignment" app:link="ticketassignment" icon="sap-icon://add"
+						type="Accept" 
+					press="navigate"></Button>					
+				</contentLeft>
+				<contentRight>
+					<Button text="View Tickets" app:link="ticket" press="navigate"></Button>
+					<Button text="View Technicians" app:link="technician" press="navigate"></Button>
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</core:View>

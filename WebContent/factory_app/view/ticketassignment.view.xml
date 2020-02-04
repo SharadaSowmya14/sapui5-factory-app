@@ -1,0 +1,38 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" xmlns:f="sap.ui.layout.form" 
+	controllerName="factory_app.controller.ticketassignment"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	id="ticketassignmentview" viewName="ticketassignment">
+	<Page title="Assign Ticket to Technician" showNavButton="true" navButtonPress="onBack">
+		<content>
+			<VBox class="sapUiSmallMargin">
+				
+				<Label text="Select Ticket"/>
+				<Select id="TicketId" width="10em" 
+					autoAdjustWidth="true" items="{/TicketSet}" selectedKey="0">
+					<core:Item key="{TicketId}" text="{TicketId}" />
+				</Select>
+				
+				<Label text="Select Technician"/>
+				<Select id="TechnicianId" width="10em" 
+					autoAdjustWidth="true" items="{/TechnicianSet}" selectedKey="0">
+					<core:Item key="{TechnicianId}" text="{TechnicianId}" />
+				</Select>
+				
+				<Label text="Select Date"/>
+				<Input id="AssignmentDate" width="20em" placeholder="DD/MM/YYYY (no extra characters allowed)"/>
+				
+				<Label text="Time from"/>
+				<Input id="TimeFrom" width="20em" placeholder="HH:MM (no extra characters allowed)"/>
+				
+				<Label text="Time to"/>
+				<Input id="TimeTo" width="20em" placeholder="HH:MM (no extra characters allowed)"/>
+				
+				<Button text="Confirm Assignment" type="Accept" 
+					press="confirmAssignment"></Button>
+				
+			</VBox>
+
+		</content>
+	</Page>
+</core:View>

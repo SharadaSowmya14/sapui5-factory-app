@@ -1,0 +1,46 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" xmlns:f="sap.ui.layout.form" 
+	controllerName="factory_app.controller.technicianaddition"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	id="technicianadditionview" viewName="technicianaddition">
+	<Page title="Add New Technician" showNavButton="true" navButtonPress="onBack">
+		<content>
+			<VBox class="sapUiSmallMargin">
+				
+				<Label text="Technician ID"/>
+				<Input id="technicianid" width="20em" placeholder="e.x. A101"></Input>
+				
+				<Label text="Technician Name"/>
+				<Input id="techniciannameid" width="20em" placeholder="e.x. Virgil"></Input>
+				
+				<Label text="Skill Set"/>
+				<Input id="skillsetid" width="20em" placeholder="e.x. IT"></Input>
+				
+				<Label text="Working Hours"/>
+				<Input id="workinghrsid" width="20em" placeholder="e.x. 10"></Input>
+				
+				<Label text="Location"/>
+				<Input id="locationid" width="20em" placeholder="e.x. Netherlands"></Input>
+				
+				<Label text="Available?"/>
+				<Select id="availableid" width="10em" 
+					autoAdjustWidth="true" selectedKey="0">
+					<core:Item key="available" text="available" />
+					<core:Item key="N/A" text="N/A" />
+				</Select>
+				
+				<Label text="Notes"/>
+				<Input id="notesid" width="20em" placeholder="e.x. speciality, concerns"></Input>
+				
+				<Label text="Contact"/>
+				<Input id="contactid" width="20em" placeholder="e.x. Email address"></Input>
+				
+				
+				<Button text="Add Technician" icon="sap-icon://add" type="Accept" 
+					press="addTechnician"></Button>
+				
+			</VBox>
+
+		</content>
+	</Page>
+</core:View>

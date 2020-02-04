@@ -1,0 +1,76 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" controllerName="factory_app.controller.technician"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="Technicians">
+		<content>
+
+			<Table id="technicianTable" items="{/TechnicianSet}" growing="true"
+				growingScrollToLoad="true">
+
+				<columns>
+					<Column>
+						<Text text="Technician ID"></Text>
+					</Column>
+					<Column>
+						<Text text="Technician Name"></Text>
+					</Column>
+					<Column>
+						<Text text="Working Hours"></Text>
+					</Column>
+					<Column>
+						<Text text="Availability"></Text>
+					</Column>
+					<Column>
+						<Text text="Skill Set"></Text>
+					</Column>
+					<Column>
+						<Text text="Location"></Text>
+					</Column>
+					<Column>
+						<Text text="Notes"></Text>
+					</Column>
+					<Column>
+						<Text text="Contact"></Text>
+					</Column>
+					<Column>
+						<Text text="Edit Technician"></Text>
+					</Column>
+					<Column>
+						<Text text="Cancel Technician"></Text>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem>
+						<Text text="{TechnicianId}" />
+						<Text text="{TechnicianName}" />
+						<Text text="{WorkingHrs}" />
+						<Text text="{Availability}" />
+						<Text text="{SkillSet}" />
+						<Text text="{Location}" />
+						<Text text="{Notes}" />
+						<Text text="{Contact}" />
+						<Button text="Edit Technician" press="editTechnician"></Button>
+						<Button text="Cancel Technician" press="cancelTechnician"></Button>
+					</ColumnListItem>
+				</items>
+
+			</Table>
+
+		</content>
+		<footer>
+			<Bar>
+				<contentLeft>
+					<Button text="Add New Technician" app:link="technicianaddition" icon="sap-icon://add"
+						type="Accept" 
+					press="navigate"></Button>					
+				</contentLeft>
+				<contentRight>
+					<Button text="View Dashboard" app:link="dashboard" press="navigate"></Button>
+					<Button text="View Tickets" app:link="ticket" press="navigate"></Button>
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</core:View>
